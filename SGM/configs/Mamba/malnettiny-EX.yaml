@@ -1,0 +1,66 @@
+out_dir: results
+metric_best: accuracy
+wandb:
+  use: True
+  project: GNN-Benchmark-RandomSeed
+  entity: project
+dataset:
+  format: PyG-MalNetTiny
+  name: LocalDegreeProfile
+  task: graph
+  task_type: classification
+  transductive: False
+  node_encoder: True
+  node_encoder_name: LinearNode
+  edge_encoder: True
+  edge_encoder_name: DummyEdge
+  edge_encoder_bn: False
+train:
+  mode: custom
+  batch_size: 16 #default 16
+  eval_period: 1
+  ckpt_period: 100
+  #ckpt_period: 1
+model:
+  type: GPSModel
+  loss_fun: cross_entropy
+  edge_decoding: dot
+  graph_pooling: max
+gt:
+  layer_type: CustomGatedGCN+Mamba_Hybrid_Degree_Noise_Bucket
+  layers: 5
+  n_heads: 4
+  dim_hidden: 64  # `gt.dim_hidden` must match `gnn.dim_inner`
+  dropout: 0.0
+  attn_dropout: 0.5
+  layer_norm: False
+  batch_norm: True
+  neuron_type: sdn
+  learnable_vth: True
+  shared_vth: False
+gnn:
+  head: default
+  layers_pre_mp: 1
+  layers_post_mp: 3  # Not used when `gnn.head: san_graph`
+  dim_inner: 64  # `gt.dim_hidden` must match `gnn.dim_inner`
+  batchnorm: True
+  act: relu
+  dropout: 0.0
+  agg: mean
+  normalize_adj: False
+optim:
+  clip_grad_norm: True
+  optimizer: adamW
+  weight_decay: 1e-5
+  base_lr: 0.0015
+  max_epoch: 150
+  #max_epoch: 1
+  scheduler: cosine_with_warmup
+  num_warmup_epochs: 10
+  #num_warmup_epochs: 1
+seed: 0
+#pretrained:
+#  dir: "/root/autodl-tmp/Graph-Mamba-main/results/malnettiny-EX-threshold_1.0_graph_1.0_mamba_ablation_graph"
+#  freeze_main: True
+#  reset_prediction_head: False
+name_tag: malnettiny_ter_value_temporal

@@ -1,0 +1,77 @@
+out_dir: results
+metric_best: accuracy
+wandb:
+  use: True
+  project: LRGB-Benchmark-RandomSeed
+  entity: project
+dataset:
+  format: PyG-Planetoid
+  name: Cora
+  task: node
+  task_type: classification
+  transductive: True
+  node_encoder: True
+  node_encoder_name: LapPE
+  node_encoder_bn: False
+  edge_encoder: False
+  edge_encoder_name: none
+  edge_encoder_bn: False
+  split_mode: standard
+posenc_LapPE:
+  enable: True
+  eigen:
+    laplacian_norm: none
+    eigvec_norm: L2
+    max_freqs: 10
+  model: DeepSet
+  dim_pe: 16
+  layers: 2
+  raw_norm_type: none
+train:
+  mode: custom
+  batch_size: 16
+  eval_period: 1
+  ckpt_period: 100
+  sampler: neighbor
+  neighbor_sizes : [15, 10]
+model:
+  type: GPSModel
+  loss_fun: weighted_cross_entropy
+  #graph_pooling: mean
+gt:
+  layer_type: CustomGatedGCN+Mamba_Hybrid_Degree_Noise
+  n_heads: 4
+  dim_hidden: 96  # `gt.dim_hidden` must match `gnn.dim_inner`
+  dropout: 0.0
+  attn_dropout: 0.2
+  layer_norm: False
+  batch_norm: True
+  neuron_type: sdn
+  learnable_vth: True
+  shared_vth: False
+gnn:
+  head: default
+  layers_mp: 2
+  layers_pre_mp: 0
+  layers_post_mp: 1  # Not used when `gnn.head: san_graph`
+  dim_inner: 96  # `gt.dim_hidden` must match `gnn.dim_inner`
+  batchnorm: True
+  act: relu
+  dropout: 0.0
+optim:
+  clip_grad_norm: True
+  optimizer: adamW
+  weight_decay: 0.01
+  base_lr: 0.001
+  max_epoch: 100
+  scheduler: cosine_with_warmup
+  num_warmup_epochs: 100
+seed: 0
+num_workers : 0
+#pretrained:
+  #dir: "/root/Graph-Mamba-main/results/peptides-func-EX"
+  #freeze_main: True
+  #reset_prediction_head: False
+#name_tag: val
+#prep:
+  #train_percent: 0.6
