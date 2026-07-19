@@ -12,6 +12,10 @@ SGM combines a local topology branch and a global context branch. The local bran
 
 SSDN follows the spike-event objective: instead of only fitting continuous membrane potentials, it preserves threshold-triggered spike traces. The Safety Margin mechanism further improves robustness by keeping active and silent states away from firing boundaries.
 
+## Framework
+
+![框架图描述](./assets/framework.png)
+
 ## Main Files
 
 ```text
@@ -39,16 +43,6 @@ Run one of the SGM configs:
 
 ```bash
 python main.py --cfg configs/Mamba/vocsuperpixels-EX.yaml
-```
-
-```yaml
-model:
-  type: GPSModel
-
-gt:
-  layer_type: CustomGatedGCN+Mamba_Hybrid_Degree_Noise_Bucket
-  neuron_type: sdn
-  learnable_vth: True
 ```
 
 ## Acknowledgements
