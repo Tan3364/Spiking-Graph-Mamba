@@ -41,6 +41,14 @@ Run one of the SGM configs:
 python main.py --cfg configs/Mamba/vocsuperpixels-EX.yaml
 ```
 
-## Acknowledgements
+## References
 
-This code builds on GraphGym, PyTorch Geometric, Mamba-SSM, and SpikingJelly.
+If you found this code useful, please consider citing the following works that our implementation builds upon:
+
+```bibtex
+@inproceedings{rampasek2022recipe,
+  title={Recipe for a General, Powerful, Scalable Graph Transformer},
+  author={Rampasek, Ladislav and Galkin, Mikhail and Dwivedi, Vijay Prakash and Lu, Anh Tuan and Luu, Guy and Wolf, Guy and Beaini, Dominique},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+  year={2022}
+}
